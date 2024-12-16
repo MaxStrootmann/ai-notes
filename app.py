@@ -1,8 +1,12 @@
 import logging
+import json
 from flask import Flask, request, jsonify, send_file
 from werkzeug.middleware.proxy_fix import ProxyFix
 from services.email_service import send_email
 from services.pyannote_service import diarize
+
+# 16-dec, works with cmd: curl -v -X POST -F "audio_file=@/home/max/ai-notes/2dekamer.mp3" https://dbln.nl
+# prints to gunicorn_error.log and emails the diarization json
 
 
 app = Flask(__name__)
@@ -17,16 +21,29 @@ if __name__ != '__main__':
 
 @app.route('/', methods=['POST'])
 def handle_recording():
-    # Write file from request to disk
-    # for now use test file
-    # is this filepath correct?
-    file_path = "/2dekamer.mp3"
-    file_url = f"https://dbln.nl/get-url/{file_path}"
-    diarize(file_url)
+        # Check if the 'audio_file' is part of the request
+    if 'audio_file' not in request.files:
+        return {'error': 'No file part'}, 400
 
-    # Delete file from disk
+    file = request.files['audio_file']
 
-    return jsonify({"status": "received"}), 200
+    # Check if the user uploaded an actual file
+    if file.filename == '':
+        return {'error': 'No selected file'}, 400
+
+    if file and file.filename:
+        # Save the file to the uploads folder
+        file_path = "./" + file.filename
+        file.save(file_path)
+        file_url = f"https://dbln.nl/get-url//{file.filename}"
+        app.logger.info(f"Upload successful, path: {file_path}, url: {file_url}")
+        diarize(file_url)
+
+        return jsonify({'status': 'received'}), 200
+
+    # delete file from disk
+
+    return jsonify({'status': 'received, not handled'}), 200
 
 
 @app.route('/get-url/<path:file_path>', methods=['GET'])
@@ -40,5 +57,6 @@ def handle_webhook():
     app.logger.info(f"Webhook received")
     data = request.json
     app.logger.info(f"Received data: {data}")
-    send_email(data)
+    json_str = json.dumps(data, indent=4)
+    send_email(json_str)
     return jsonify({'status': 'received'}), 200
