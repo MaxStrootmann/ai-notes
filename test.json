@@ -1,0 +1,93 @@
+{
+    "jobId": "bd761da8-6768-49ee-a9c9-7b7bc6e20c58",
+    "status": "succeeded",
+    "output": {
+        "diarization": [
+            {
+                "speaker": "SPEAKER_00",
+                "start": 0.005,
+                "end": 40.085
+            },
+            {
+                "speaker": "SPEAKER_01",
+                "start": 36.545,
+                "end": 36.705
+            },
+            {
+                "speaker": "SPEAKER_01",
+                "start": 41.085,
+                "end": 70.105
+            },
+            {
+                "speaker": "SPEAKER_00",
+                "start": 43.305,
+                "end": 43.785
+            },
+            {
+                "speaker": "SPEAKER_01",
+                "start": 70.685,
+                "end": 102.925
+            },
+            {
+                "speaker": "SPEAKER_00",
+                "start": 104.625,
+                "end": 174.685
+            },
+            {
+                "speaker": "SPEAKER_00",
+                "start": 175.605,
+                "end": 176.125
+            },
+            {
+                "speaker": "SPEAKER_02",
+                "start": 178.365,
+                "end": 179.705
+            },
+            {
+                "speaker": "SPEAKER_02",
+                "start": 181.645,
+                "end": 185.225
+            },
+            {
+                "speaker": "SPEAKER_00",
+                "start": 184.245,
+                "end": 184.765
+            },
+            {
+                "speaker": "SPEAKER_02",
+                "start": 185.505,
+                "end": 201.545
+            },
+            {
+                "speaker": "SPEAKER_02",
+                "start": 201.745,
+                "end": 214.965
+            },
+            {
+                "speaker": "SPEAKER_02",
+                "start": 215.225,
+                "end": 219.725
+            },
+            {
+                "speaker": "SPEAKER_02",
+                "start": 220.245,
+                "end": 234.885
+            },
+            {
+                "speaker": "SPEAKER_00",
+                "start": 235.545,
+                "end": 237.185
+            },
+            {
+                "speaker": "SPEAKER_00",
+                "start": 237.665,
+                "end": 247.825
+            },
+            {
+                "speaker": "SPEAKER_00",
+                "start": 248.285,
+                "end": 270.705
+            }
+        ]
+    }
+}
