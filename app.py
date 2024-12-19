@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, send_file
 from werkzeug.middleware.proxy_fix import ProxyFix
 from services.email_service import send_email
 from services.pyannote_service import diarize
+from transcription_service import transcribe
 
 # 16-dec, works with cmd: curl -v -X POST -F "audio_file=@/home/max/ai-notes/2dekamer.mp3" https://dbln.nl
 # prints to gunicorn_error.log and emails the diarization json
@@ -21,7 +22,7 @@ if __name__ != '__main__':
 
 @app.route('/', methods=['POST'])
 def handle_recording():
-        # Check if the 'audio_file' is part of the request
+    # Check if the 'audio_file' is part of the request
     if 'audio_file' not in request.files:
         return {'error': 'No file part'}, 400
 
@@ -33,9 +34,10 @@ def handle_recording():
 
     if file and file.filename:
         # Save the file to the uploads folder
-        file_path = "./" + file.filename
+        file_name = file.filename.replace(" ", "-")
+        file_path = "./" + file_name
         file.save(file_path)
-        file_url = f"https://dbln.nl/get-url//{file.filename}"
+        file_url = f"https://dbln.nl/get-url//{file_name}"
         app.logger.info(f"Upload successful, path: {file_path}, url: {file_url}")
         diarize(file_url)
 
@@ -54,9 +56,9 @@ def get_audio_file(file_path):
 
 @app.route('/pyannote-webhook', methods=['POST'])
 def handle_webhook():
-    app.logger.info(f"Webhook received")
+    # app.logger.info(f"Webhook received")
     data = request.json
-    app.logger.info(f"Received data: {data}")
-    json_str = json.dumps(data, indent=4)
-    send_email(json_str)
+    # app.logger.info(f"Received data: {data}")
+
+    transcribe(data)
     return jsonify({'status': 'received'}), 200

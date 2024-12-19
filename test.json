@@ -1,0 +1,23 @@
+{
+    "jobId": "6d989cf1-c359-44cb-8d58-728b2fb9d636",
+    "status": "succeeded",
+    "output": {
+        "diarization": [
+            {
+                "speaker": "SPEAKER_00",
+                "start": 0.805,
+                "end": 3.845
+            },
+            {
+                "speaker": "SPEAKER_00",
+                "start": 4.625,
+                "end": 6.605
+            },
+            {
+                "speaker": "SPEAKER_00",
+                "start": 7.325,
+                "end": 7.925
+            }
+        ]
+    }
+}
